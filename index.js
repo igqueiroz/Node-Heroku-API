@@ -6,8 +6,8 @@ function App(req, res) {
     return app(req, res);
 }
 
-const lojaApi = App;
+const rNative = App;
 
 module.exports = {
-    lojaApi
+    rNative
 };

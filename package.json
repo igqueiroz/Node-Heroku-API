@@ -1,6 +1,6 @@
 {
-  "name": "mobile-app-native-node",
-  "version": "1.0.0",
+  "name": "react-native-backend",
+  "version": "0.0.1",
   "description": "Backend NodeJs API",
   "main": "index.js",
   "repository": "git@bitbucket.org:igqueiroz/mobile-app-native-node.git",
@@ -23,7 +23,8 @@
     "test:watch": "jest --watch",
     "start": "node --optimize_for_size --max_old_space_size=960 index.js",
     "deploy:local": "heroku local web",
-    "watch:deploy:local": "npm-watch heroku local web"
+    "deploy:heroku": "git push heroku main",
+    "watch:deploy:local": "npm-watch deploy:local"
   },
   "jest": {
     "testEnvironment": "node",

@@ -15,6 +15,6 @@ const cors = require('cors')
 // route.put('/order/:id', serverTools.headers, orders.updateOne.bind(orders))
 // route.delete('/order/:id', serverTools.headers, orders.deleteOne.bind(orders))
 
-// route.get('/orders', serverTools.headers, orders.getAll.bind(orders))
+route.get('/test', (req, res) => res.status(200).send('ok'))
 
 module.exports = route
