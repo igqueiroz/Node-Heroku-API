@@ -1,0 +1,9 @@
+name: react-native-backend
+services:
+  database:
+    type: mysql:8
+    portforward: true
+    creds:
+      database: react
+      user: react
+      password: react
