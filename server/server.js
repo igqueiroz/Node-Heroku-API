@@ -29,7 +29,7 @@ class Server {
         app.use(express.urlencoded({ extended: false }));
         app.use(express.json({type: "application/json"}));
         app.use(paths.basePath, routes)
-        const server = app.listen(process.env.API_PORT || 5000, err => {
+        const server = app.listen(process.env.PORT || 5000, err => {
             if (err) return console.error(err)
             const port = server.address().port
             console.info(`CORS-enabled web server - App listening on port ${port}`)
