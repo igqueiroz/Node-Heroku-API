@@ -2,7 +2,7 @@ const routes = require('../src/routes')
 
 const express = require('express')
 const { default: axios } = require('axios')
-// const { connection } = require('../src/models')
+const { connection } = require('../src/models')
 class Server {
     constructor() {
     }
@@ -10,16 +10,17 @@ class Server {
     healthCheck(app, paths) {
         
         app.use(`/health-check`, async (req, res) => {
-            const database = null
-                // await connection
-                //     .authenticate()
-                //     .then(() => {
-                //         return 'Postgres Connection has been established successfully.'
-                //     })
-                //     .catch(err => {
-                //         const result = (process.env.NODE_ENV === "PROD") ? { err } : { err, dbAddress: `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}` }
-                //         return result
-                //     })
+            const database = 
+                await connection
+                    .authenticate()
+                    .then(() => {
+                        return 'Postgres Connection has been established successfully.'
+                    })
+                    .catch(err => {
+                        console.error(err)
+                        let msg = 'Postgres Connection error.'
+                        return { err, msg }
+                    })
                 
             res.status(200).send({ paths, database })
         })
