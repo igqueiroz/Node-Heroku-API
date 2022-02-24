@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const logger = require('../logger/index')
+// const logger = require('../logger/index')
 const Sequelize = require('sequelize')
 // const Orders = require('./Orders')
 // const RecurrentMagentoOrders = require('./RecurrentMagentoOrders')
@@ -26,7 +26,7 @@ const path = require('path')
 
 // Connect Postgres Database
 // Production Env Log is disable
-const logging = (process.env.NODE_ENV === "PRD") ? undefined : (...msg) => logger.info(msg)
+// const logging = (process.env.NODE_ENV === "PRD") ? undefined : (...msg) => logger.info(msg)
 const opts = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
