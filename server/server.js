@@ -14,11 +14,11 @@ class Server {
                 await connection
                     .authenticate()
                     .then(() => {
-                        return 'Postgres Connection has been established successfully.'
+                        return 'MySQL Connection has been established successfully.'
                     })
                     .catch(err => {
                         console.error(err)
-                        let msg = 'Postgres Connection error.'
+                        let msg = 'MySQL Connection error.'
                         return { err, msg }
                     })
                 

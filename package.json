@@ -24,6 +24,7 @@
     "start": "node --optimize_for_size --max_old_space_size=960 index.js",
     "deploy:local": "heroku local web",
     "deploy:heroku": "git push heroku main",
+    "logs": "heroku logs --tail",
     "watch:deploy:local": "npm-watch deploy:local"
   },
   "jest": {
