@@ -1,10 +1,14 @@
 const { DataTypes } = require('sequelize')
-
+const Users = require('./Users')
 const Info = {
   userid: {
     type: DataTypes.INTEGER(11),
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
+    references: {
+        model: Users,
+        key: 'id'
+    }
   },
   cpf: DataTypes.INTEGER(11),
   full_name: DataTypes.INTEGER(11),

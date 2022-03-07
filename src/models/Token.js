@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize')
-
+const Users = require('./Users')
 const Token = {
   userid: {
     type: DataTypes.INTEGER(11),
