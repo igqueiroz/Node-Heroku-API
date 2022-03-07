@@ -2,27 +2,17 @@ const fs = require('fs')
 
 // const logger = require('../logger/index')
 const Sequelize = require('sequelize')
-// const Orders = require('./Orders')
-// const RecurrentMagentoOrders = require('./RecurrentMagentoOrders')
-// const RecurrentWoocommerceOrders = require('./RecurrentWoocommerceOrders')
-// // const RecurrentTransactions = require('./RecurrentTransations')
-// const SalesForce = require('./SalesForce')
-// const LogAS400 = require('./LogAS400')
-// const LogProtheus = require('./LogProtheus')
+const Users = require('./Users')
+const Token = require('./Token')
+
 // const Token = require('./Token')
 const path = require('path')
 
 // Definitions keys is exactly the same name as tables
-// const definitions = {
-//     orders: Orders,
-//     recurrent_magento_orders: RecurrentMagentoOrders,
-//     recurrent_woocommerce_orders: RecurrentWoocommerceOrders,
-//     // recurrent_transactions: RecurrentTransactions,
-//     salesforce: SalesForce,
-//     log_as400: LogAS400,
-//     log_protheus: LogProtheus,
-//     tokens: Token
-// }
+const definitions = {
+    users: Users,
+    tokens: Token
+}
 
 // Connect Postgres Database
 // Production Env Log is disable
@@ -45,12 +35,6 @@ const opts = {
 
 // setDBSSLConfig(opts)
 const connection = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, opts)
-console.log(connection)
-
-
-// mysql -u reactnative_app -p -h reactnativedb.igorqueiroz.com.br reactnative_app Medicina@11
-// http://reactnativedb.igorqueiroz.com.br/
-
 
 const models = {}
 // for (const name in definitions) {
@@ -80,7 +64,7 @@ const models = {}
 //         opts.dialectOptions = { ssl: setDBSSLCerts('config/dev') }
 //     else if (NODE_ENV === 'HML')
 //         opts.dialectOptions = { ssl: setDBSSLCerts('config/homolog') }
-//     else if (NODE_ENV === 'PROD')
+//     else if (NODE_ENV === 'PRD')
 //         opts.dialectOptions = { ssl: setDBSSLCerts('config/prod') }
     
 // }
