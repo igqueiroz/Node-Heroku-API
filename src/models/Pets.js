@@ -7,7 +7,7 @@ const Pets = {
         primaryKey: true
     },
     userid: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         references: {
             model: Users,
             key: 'id'
