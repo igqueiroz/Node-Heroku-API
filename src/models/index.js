@@ -37,4 +37,9 @@ for (const name in definitions) {
     models[name] = connection.define(name, definitions[name], { freezeTableName: true, timestamps: false })
 }
 
+// relations
+models.info.belongsTo(models.users, { foreignKey: 'userid' })
+models.tokens.belongsTo(models.users, { foreignKey: 'userid' })
+models.users.hasMany(models.pets, { foreignKey: 'userid' })
+
 module.exports = { connection, models }

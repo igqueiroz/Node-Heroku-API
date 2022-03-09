@@ -1,0 +1,71 @@
+const db = require('../models')
+
+const error = (e) => {
+    return {
+        message: e.message || "",
+        query: e.sql || "", 
+        details: e.original && e.original.detail || "",
+        errors: e.errors && e.errors.length || "",
+        email: e.fields && e.fields.email || ""
+    }
+}
+
+const create = async (data) => {
+    try {
+        const newUser = await db.models.users.build(data.email)
+        await newUser.save({
+            returning: true,
+            plain: true,
+            raw: true
+        })
+        const info = {
+            userid: newUser.id,
+            cpf: data.cpf,
+            full_name: data.full_name,
+            phone: data.phone
+        }
+        await db.models.info.build(info)
+        return {
+            success: true,
+            id: newUser.id
+        }
+    } catch (e) {
+        return error(e)
+    }
+}
+
+const getAll = async (limit, offset) => {
+    try {
+        const lmt = limit
+        const off = offset
+        const listUsers = await db.models.users.findAll({ limit: lmt, offset: off, order: [['id', 'ASC']], include: db.models.info })
+
+        return listUsers
+    } catch (e) {
+        return error(e)
+    }
+}
+
+const getOne = async (type, value) => {
+    try {
+        const listByType = await db.models.users.findOne({ where: { [type]: value }})
+        return listByType.dataValues
+    } catch (e) {
+        return error(e)
+    }
+}
+
+const deleteOne = async (type, value) => {
+    
+    try {
+        const deleteByType = await db.models.users.destroy({ where: { [type]: value }})
+        if (deleteByType == 0) return 'Nothing to delete'
+        else return 'deleted'
+    } catch (e) {
+        return error(e)
+    }
+}
+
+
+
+module.exports = { create, getAll, getOne, deleteOne }

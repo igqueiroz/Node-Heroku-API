@@ -25,14 +25,14 @@
     "deploy:local": "heroku local web",
     "deploy:heroku": "git push heroku main",
     "logs:heroku": "heroku logs --tail",
-    "watch:deploy:local": "nodemon deploy:local"
+    "watch:deploy:local": "nodemon heroku local web"
   },
   "jest": {
     "testEnvironment": "node",
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
-    "coveragePathIgnorePatterns": [
+    "coveragePathIgnorePatterns": [ 
       "/node_modules/"
     ]
   },

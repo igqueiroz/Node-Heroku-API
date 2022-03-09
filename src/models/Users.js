@@ -6,7 +6,7 @@ const Users = {
         autoIncrement: true,
         primaryKey: true
     },
-    created_at: DataTypes.DATE,
+    created_at: DataTypes.NOW,
     email: {
         type: DataTypes.CHAR(40),
         unique: true    

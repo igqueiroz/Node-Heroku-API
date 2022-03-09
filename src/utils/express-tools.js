@@ -45,6 +45,7 @@ class ExpressTools {
       return {
         optionsSuccessStatus: 200,
         origin: (origin, callback) => {
+            console.log('origin >>>', origin)
             if (allowedOrigins.indexOf(origin) === -1 &&
               (process.env.NODE_ENV === 'DEV' && 
               origin === 'undefined')) {
