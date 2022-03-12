@@ -22,23 +22,23 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "start": "node --optimize_for_size --max_old_space_size=960 index.js",
-    "deploy:local": "heroku local web",
+    "deploy:local": "nodemon --exec heroku local",
     "deploy:heroku": "git push heroku main",
-    "logs:heroku": "heroku logs --tail",
-    "watch:deploy:local": "nodemon heroku local web"
+    "logs:heroku": "heroku logs --tail"
   },
   "jest": {
     "testEnvironment": "node",
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
-    "coveragePathIgnorePatterns": [ 
+    "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
   },
   "homepage": "https://bitbucket.org/igqueiroz/mobile-app-native-node/src/main/README.md",
   "dependencies": {
     "axios": "^0.21.4",
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-http-context": "^1.2.4",
