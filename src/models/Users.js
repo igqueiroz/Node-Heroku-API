@@ -11,7 +11,12 @@ const Users = {
         type: DataTypes.CHAR(40),
         unique: true    
     },
-    password: DataTypes.CHAR(32)
+    password: { 
+        type: DataTypes.CHAR(32),
+        get() {
+            return undefined;
+        }
+    }
 }
 
 module.exports = Users

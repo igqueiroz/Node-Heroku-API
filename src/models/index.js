@@ -38,8 +38,12 @@ for (const name in definitions) {
 }
 
 // relations
-models.info.belongsTo(models.users, { foreignKey: 'userid' })
-models.tokens.belongsTo(models.users, { foreignKey: 'userid' })
-models.users.hasMany(models.pets, { foreignKey: 'userid' })
+
+models.users.hasOne(models.info, { foreignKey: 'userid' })
+models.info.belongsTo(models.users,  { foreignKey: 'userid' })
+
+// models.users.hasOne(models.tokens, { foreignKey: 'userid' })
+// models.tokens.belongsTo(models.users)
+
 
 module.exports = { connection, models }

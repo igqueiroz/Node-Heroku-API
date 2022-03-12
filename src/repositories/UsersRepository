@@ -1,18 +1,25 @@
 const db = require('../models')
+const bcrypt = require("bcrypt")
 
 const error = (e) => {
     return {
         message: e.message || "",
         query: e.sql || "", 
-        details: e.original && e.original.detail || "",
-        errors: e.errors && e.errors.length || "",
-        email: e.fields && e.fields.email || ""
+        details: e.original && e.original.sqlMessage || "",
+        errorsLength: e.errors && e.errors.length || "",
+        code: e.original && e.original.code || ""
     }
 }
 
 const create = async (data) => {
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(data.password, salt);
     try {
-        const newUser = await db.models.users.build(data.email)
+        const user = {
+            email: data.email,
+            password
+        }
+        const newUser = await db.models.users.build(user)
         await newUser.save({
             returning: true,
             plain: true,
@@ -22,14 +29,22 @@ const create = async (data) => {
             userid: newUser.id,
             cpf: data.cpf,
             full_name: data.full_name,
-            phone: data.phone
+            phone: data.phone,
+            picture_path: ''
         }
-        await db.models.info.build(info)
+        const newUserInfo = await db.models.info.build(info)
+        await newUserInfo.save({
+            returning: true,
+            plain: true,
+            raw: true
+        })
+        newUser.info = newUserInfo
         return {
             success: true,
-            id: newUser.id
+            newUser
         }
     } catch (e) {
+        console.error(e)
         return error(e)
     }
 }
@@ -38,7 +53,7 @@ const getAll = async (limit, offset) => {
     try {
         const lmt = limit
         const off = offset
-        const listUsers = await db.models.users.findAll({ limit: lmt, offset: off, order: [['id', 'ASC']], include: db.models.info })
+        const listUsers = await db.models.users.findAll({ limit: lmt, offset: off, order: [['id', 'ASC']],  include: db.models.info })
 
         return listUsers
     } catch (e) {
