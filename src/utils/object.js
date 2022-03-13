@@ -46,6 +46,18 @@ class Obj {
             .join('&');
     }
 
+    static findValueType(value) {
+        const emailValid = this.emailValidation(value)
+        const idValid = !isNaN(value)
+        let type
+
+        if (emailValid) type = "email"
+        if (idValid) type = "id"
+        if (!emailValid && !idValid) return false
+
+        return type
+    }
+
 }
 
 module.exports = Obj

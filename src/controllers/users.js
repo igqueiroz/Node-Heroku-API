@@ -1,4 +1,4 @@
-const { create, getAll } = require('../repositories/UsersRepository')
+const user = require('../repositories/UsersRepository')
 const utils = require('../utils/object')
 
 class Users {
@@ -9,7 +9,7 @@ class Users {
         const validEmail = utils.emailValidation(req.body.email)
 
         if (!validEmail) return res.status(400).send('invalid')
-        const result = await create(req.body)
+        const result = await user.create(req.body)
         if (result.errors && result.errors > 0) {
             return res.status(400).send(result)
         }
@@ -21,38 +21,37 @@ class Users {
         if (isNaN(req.query.lmt)) return res.status(400).send('invalid')
         if (isNaN(req.query.off)) return res.status(400).send('invalid')
 
-        const result = await getAll(
+        const result = await user.getAll(
             Math.abs(parseInt(req.query.lmt)),
             Math.abs(parseInt(req.query.off))
         )
         res.status(200).send(result)
     }
 
-    // async getOneId(req, res) {
-    //     // This method can handle emails UUIDs and Ids
-    //     const value = req.params.emailUuidId
-    //     const type = utils.findValueType(value)
-    //     if (!type) return res.status(400).send('bad format!')
+    async getOne(req, res) {
+        const value = req.params.id
+        const type = utils.findValueType(value)
+        if (!type) return res.status(400).send('bad format!')
         
-    //     const result = await getOne(type, value)
-    //     if (result.errors && result.errors > 0) {
-    //         return res.status(400).send(result)
-    //     }
-    //     return res.status(200).send(result)
-    // }
+        const result = await user.getOne(type, value)
+        if (result.errors && result.errors > 0) {
+            return res.status(400).send(result)
+        }
+        return res.status(200).send(result)
+    }
 
-    // async deleteOneId(req, res) {
-    //     // This method can handle emails UUIDs and Ids
-    //     const value = req.params.emailUuidId
-    //     const type = utils.findValueType(value)
-    //     if (!type) return res.status(400).send('bad format!')
+    async deleteOne(req, res) {
+        // This method can handle emails UUIDs and Ids
+        const value = req.params.id
+        const type = utils.findValueType(value)
+        if (!type) return res.status(400).send('bad format!')
 
-    //     const result = await deleteOne(type, value)
-    //     if (result.errors && result.errors > 0) {
-    //         return res.status(400).send(result)
-    //     }
-    //     return res.status(200).send(result)
-    // }
+        const result = await user.deleteOne(type, value)
+        if (result.errors && result.errors > 0) {
+            return res.status(400).send(result)
+        }
+        return res.status(200).send(result)
+    }
 
 }
 

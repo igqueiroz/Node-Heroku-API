@@ -2,6 +2,7 @@ const db = require('../models')
 const bcrypt = require("bcrypt")
 
 const error = (e) => {
+    console.error(e)
     return {
         message: e.message || "",
         query: e.sql || "", 
@@ -44,7 +45,6 @@ const create = async (data) => {
             newUser
         }
     } catch (e) {
-        console.error(e)
         return error(e)
     }
 }
@@ -63,7 +63,9 @@ const getAll = async (limit, offset) => {
 
 const getOne = async (type, value) => {
     try {
-        const listByType = await db.models.users.findOne({ where: { [type]: value }})
+        const listByType = await db.models.users.findOne({ where: { [type]: value }, include: db.models.info })
+        console.log('listByType', listByType)
+        if (listByType === null) return []
         return listByType.dataValues
     } catch (e) {
         return error(e)
@@ -71,10 +73,12 @@ const getOne = async (type, value) => {
 }
 
 const deleteOne = async (type, value) => {
-    
+    let getType = type
     try {
-        const deleteByType = await db.models.users.destroy({ where: { [type]: value }})
-        if (deleteByType == 0) return 'Nothing to delete'
+        const deleteByType = await db.models.users.destroy({ where: { [type]: value } })
+        if (getType === 'id') getType = 'userid'
+        const deleteInfoByType = await db.models.info.destroy({ where: { [getType]: value } })
+        if (deleteByType == 0 && deleteInfoByType == 0) return 'Nothing to delete'
         else return 'deleted'
     } catch (e) {
         return error(e)

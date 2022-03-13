@@ -14,10 +14,7 @@ const serverTools = {
 // route.get('/users',  cors(serverTools.cors), serverTools.headers, serverTools.recaptcha, users.getAll.bind(users))
 route.get('/users',  users.getAll.bind(users))
 route.post('/user', users.create.bind(users))
-// route.get('/order/:id', serverTools.headers, orders.getOne.bind(orders))
-// route.put('/order/:id', serverTools.headers, orders.updateOne.bind(orders))
-// route.delete('/order/:id', serverTools.headers, orders.deleteOne.bind(orders))
-
-route.get('/test', (req, res) => res.status(200).send('ok'))
+route.get('/user/:id', users.getOne.bind(users))
+route.delete('/user/:id', users.deleteOne.bind(users))
 
 module.exports = route
