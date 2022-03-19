@@ -1,5 +1,4 @@
 const db = require('../models')
-const bcrypt = require("bcrypt")
 
 const error = (e) => {
     console.error(e)
@@ -49,18 +48,6 @@ const create = async (data) => {
     }
 }
 
-const getAll = async (limit, offset) => {
-    try {
-        const lmt = limit
-        const off = offset
-        const listUsers = await db.models.users.findAll({ limit: lmt, offset: off, order: [['id', 'ASC']],  include: db.models.info })
-
-        return listUsers
-    } catch (e) {
-        return error(e)
-    }
-}
-
 const getOne = async (type, value) => {
     try {
         const listByType = await db.models.users.findOne({ where: { [type]: value }, include: db.models.info })
@@ -72,19 +59,4 @@ const getOne = async (type, value) => {
     }
 }
 
-const deleteOne = async (type, value) => {
-    let getType = type
-    try {
-        const deleteByType = await db.models.users.destroy({ where: { [type]: value } })
-        if (getType === 'id') getType = 'userid'
-        const deleteInfoByType = await db.models.info.destroy({ where: { [getType]: value } })
-        if (deleteByType == 0 && deleteInfoByType == 0) return 'Nothing to delete'
-        else return 'deleted'
-    } catch (e) {
-        return error(e)
-    }
-}
-
-
-
-module.exports = { create, getAll, getOne, deleteOne }
+module.exports = { create, getOne }

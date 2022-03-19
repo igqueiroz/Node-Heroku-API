@@ -42,8 +42,8 @@ for (const name in definitions) {
 models.users.hasOne(models.info, { foreignKey: 'userid' })
 models.info.belongsTo(models.users,  { foreignKey: 'userid' })
 
-// models.users.hasOne(models.tokens, { foreignKey: 'userid' })
-// models.tokens.belongsTo(models.users)
+models.users.hasOne(models.tokens, { foreignKey: 'userid' })
+models.tokens.belongsTo(models.users, { foreignKey: 'userid' })
 
 
 module.exports = { connection, models }
