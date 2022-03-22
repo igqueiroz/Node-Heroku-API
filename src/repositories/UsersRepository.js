@@ -1,24 +1,23 @@
 const db = require('../models')
-const bcrypt = require("bcrypt")
 
 const error = (e) => {
-    console.error(e)
-    return {
+    let errorMsg = {
+        success: false,
         message: e.message || "",
         query: e.sql || "", 
         details: e.original && e.original.sqlMessage || "",
         errorsLength: e.errors && e.errors.length || "",
         code: e.original && e.original.code || ""
     }
+    console.error(errorMsg)
+    return errorMsg
 }
 
 const create = async (data) => {
-    const salt = await bcrypt.genSalt(10);
-    const password = await bcrypt.hash(data.password, salt);
     try {
         const user = {
             email: data.email,
-            password
+            password: data.password
         }
         const newUser = await db.models.users.build(user)
         await newUser.save({

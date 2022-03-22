@@ -17,4 +17,6 @@ route.post('/user', users.create.bind(users))
 route.get('/user/:id', users.getOne.bind(users))
 route.delete('/user/:id', users.deleteOne.bind(users))
 
+route.post('/login', users.login.bind(users))
+
 module.exports = route

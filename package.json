@@ -44,6 +44,7 @@
     "express-http-context": "^1.2.4",
     "express-jsdoc-swagger": "^1.6.6",
     "fast-xml-parser": "^4.0.1",
+    "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
     "path": "^0.12.7",
     "pino": "^7.0.5",

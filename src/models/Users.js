@@ -12,10 +12,14 @@ const Users = {
         unique: true    
     },
     password: { 
-        type: DataTypes.CHAR(32),
+        type: DataTypes.CHAR(90),
         get() {
             return undefined;
         }
+    },
+    is_verified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }
 

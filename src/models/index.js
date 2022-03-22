@@ -24,7 +24,7 @@ const opts = {
         acquire: 30000,
         idle: 10000
     },
-    //logging,
+    logging: process.env.NODE_ENV === "DEV",
     define: {
         underscored: true
     }
@@ -38,7 +38,6 @@ for (const name in definitions) {
 }
 
 // relations
-
 models.users.hasOne(models.info, { foreignKey: 'userid' })
 models.info.belongsTo(models.users,  { foreignKey: 'userid' })
 
