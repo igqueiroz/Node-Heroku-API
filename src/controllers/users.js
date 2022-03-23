@@ -44,7 +44,7 @@ class Users {
         const isCorrect = await bcrypt.compare(password, matchUser.password);
         if (isCorrect) {
             jwt.sign({id, email, isVerified: is_verified}, 
-                process.env.JWT_SECRET, 
+                process.env.JWT_SECRET,
                 {expiresIn: '30s'},
                 (e, token) => {
                     if (e) {
