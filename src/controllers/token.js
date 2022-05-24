@@ -5,14 +5,10 @@ class Token {
     constructor() {
     }
 
-    async create(req, res) {
-        // id can be a number or an email
-        const idVerify = this.validateOne(req.query.id)
-        const result = await token.create(idVerify)
-        if (result.errors && result.errors > 0) {
-            return res.status(400).send(result)
-        }
-        return res.status(200).send(result)
+    async create(id) {
+        const result = await token.create(id)
+        if (result.errors && result.errors > 0) return result
+        return result
     }
 
     async getOne(req, res, idOrEmail = null) {
@@ -20,7 +16,7 @@ class Token {
         const type = utils.findValueType(value)
         if (!type) return res.status(400).send('bad format!')
         
-        const result = await user.getOne(type, value)
+        const result = await token.getOne(type, value)
         if (result.errors && result.errors > 0) {
             if (res) return res.status(400).send(result)
             else return []
@@ -29,16 +25,14 @@ class Token {
         else return result
     }
 
-    async validateOne(idOrEmail) {
-        idExists = await this.getOne(null, null, idOrEmail)
-        console.log('idExists', idExists !== []);
-        // if exists validate it
+    async verify(req, res) {
+        const verifyType = req.params.type
+        let idExists = await this.getOne(req, null)
+        const createToken = await create()
+        console.log('idExists', idExists);
+        console.log('verifyType', verifyType);
+        return res.status(200).send(createToken);
     }
-
-    async recreate(token) {
-        console.log(token)
-    }
-
 }
 
 module.exports = new Token()

@@ -1,4 +1,5 @@
 const db = require('../models')
+const fields = require('../models/Token')
 
 const error = (e) => {
     let errorMsg = {
@@ -15,33 +16,23 @@ const error = (e) => {
 
 const create = async (data) => {
     try {
-        const user = {
-            email: data.email,
-            password
+        const token = {
+            [fields.userid]: data.id,
+            [fields.sms]: 123456,
+            [fields.email]: 123456,
+            [fields.expire_at]: '2022-05-02'
         }
-        const newUser = await db.models.users.build(user)
-        await newUser.save({
+        
+        const newToken = await db.models.token.build(token)
+        await newToken.save({
             returning: true,
             plain: true,
             raw: true
         })
-        const info = {
-            userid: newUser.id,
-            cpf: data.cpf,
-            full_name: data.full_name,
-            phone: data.phone,
-            picture_path: ''
-        }
-        const newUserInfo = await db.models.info.build(info)
-        await newUserInfo.save({
-            returning: true,
-            plain: true,
-            raw: true
-        })
-        newUser.info = newUserInfo
+        newToken.info = newTokenInfo
         return {
             success: true,
-            newUser
+            newToken
         }
     } catch (e) {
         return error(e)
@@ -50,10 +41,10 @@ const create = async (data) => {
 
 const getOne = async (type, value) => {
     try {
-        const listByType = await db.models.users.findOne({ where: { [type]: value }, include: db.models.info })
-        console.log('listByType', listByType)
-        if (listByType === null) return []
-        return listByType.dataValues
+        const user = await db.models.token.findOne({ where: { userid: value } })
+        console.log('user', user)
+        if (user === null) return []
+        return user.dataValues
     } catch (e) {
         return error(e)
     }

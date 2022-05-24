@@ -9,7 +9,7 @@ const Info = require('./Info')
 // Definitions keys is exactly the same name as tables
 const definitions = {
     users: Users,
-    tokens: Token,
+    token: Token,
     info: Info,
     pets: Pets
 }
@@ -41,8 +41,8 @@ for (const name in definitions) {
 models.users.hasOne(models.info, { foreignKey: 'userid' })
 models.info.belongsTo(models.users,  { foreignKey: 'userid' })
 
-models.users.hasOne(models.tokens, { foreignKey: 'userid' })
-models.tokens.belongsTo(models.users, { foreignKey: 'userid' })
+models.users.hasOne(models.token, { foreignKey: 'userid' })
+models.token.belongsTo(models.users, { foreignKey: 'userid' })
 
 
 module.exports = { connection, models }
